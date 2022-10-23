@@ -50,7 +50,7 @@ type WSocketReturn struct {
 	Bert              string
 	Pegasus           string
 	Textrank          string
-	Overall_sentiment map[string]interface{}
+	// Overall_sentiment map[string]interface{}
 	NLP_rating        float64
 	Average_rating    float64
 	Count             int
@@ -61,7 +61,7 @@ type WSocketReturn struct {
 	Keyword           []Word
 	Adj               []Word
 	Verb              []Word
-	Data              []map[string]interface{}
+	// Data              []map[string]interface{}
 }
 
 type CintrResult struct {
