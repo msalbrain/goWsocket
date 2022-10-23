@@ -287,7 +287,7 @@ func main() {
 	flag.Parse()
 	log.Println(*addr)
 	log.SetFlags(0)
-	http.HandleFunc("/echo", echo)
+	http.HandleFunc("/echo/", echo)
 	log.Fatal(http.ListenAndServe(*addr, nil))
 	// c := startProcess("63179a3bc987724acf03ddc8", 4, 4)
 	// fmt.Println(c)
