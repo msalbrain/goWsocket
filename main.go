@@ -66,7 +66,7 @@ type WSocketBase struct {
 
 type WSocketReturn struct {
 	WSocketBase
-	Data              []map[string]interface{}
+	Data              []CintrData
 	Overall_sentiment map[string]interface{}
 }
 
@@ -120,8 +120,7 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 	var anlysis map[string]interface{}
 	for _, doc := range res {
 		ma := doc.Map()
-		fmt.Printf("product: %s, limit: %d, skip: %d", prodId, ma["limit"], ma["skip"])
-		fmt.Print("\n")
+		
 		if int32(ma["limit"].(int32)) == int32(limit) && int32(ma["skip"].(int32)) == int32(skip) {
 			fmt.Printf("product: %s, limit: %d, skip: %d", prodId, ma["limit"], ma["skip"])
 			fmt.Print("\n")
@@ -145,27 +144,19 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 			panic(err)
 		}
 		// fmt.Println(cintrcompose)
-		var cintret WSocketReturn = WSocketReturn{cintrcompose, nil, nil}
+		if limit == 0{
+			limit = cintrcompose.Count
+		}
+		g := getCintrData(prodId, limit, skip)
 
-		return SprocessReturn{ws: cintret}
+
+		var cintret WSocketReturn = WSocketReturn{cintrcompose, g.Data, nil}
+
 		
+		return SprocessReturn{ws: cintret}
 
-		// cintrData := getCintrData(prodId, limit, skip)
-		// cintrcompose.Data = cintrData.Data
-		// cintrcompose.Count = cintrData.Count
-		// cintrcompose.Product = anlysis["product"].(string)
-		// cintrcompose.Bert = anlysis["bert"].(string)
-		// cintrcompose.Pegasus = anlysis["pegasus"].(string)
-		// cintrcompose.Textrank = anlysis["textrank"].(string)
-		// cintrcompose.NLP_rating = float64(anlysis["NLP_rating"].(float64))
-		// cintrcompose.Average_rating = float64(anlysis["Average_rating"].(float64))
-		// if limit == 0 {
-		// 	cintrcompose.Limit = cintrData.Count
-		// } else {
-		// 	cintrcompose.Limit = limit
-		// }
-		// cintrcompose.Skip = anlysis["skip"].(int)
 
+		
 
 	} else {
 		// link := fmt.Sprintf("http://3.235.109.178/private/api/reviews/?productId=%s&limit=%v&skip=%v&access_token=85e53c1f044bb27455557fd3cdf",
