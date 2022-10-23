@@ -172,7 +172,9 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 			log.Println(err.Error())
 		}
 		responseData, err := ioutil.ReadAll(response.Body)
-		fmt.Println(string(responseData))
+		fmt.Printf("pass by private with productId '%s', limit '%v', skip '%v'\n", prodId, limit, skip)
+		// fmt.Println(string(responseData))
+		
 		var d PrivateApi
 		err = json.Unmarshal(responseData, &d)
 		d.Status = response.StatusCode
@@ -200,12 +202,14 @@ func WSocketReply(c *websocket.Conn, Val DataInfo) interface{} {
 		return nil
 	} else {
 		if (s.pri != PrivateApi{}) {
-			if (s.pri.Status != 200) || (s.pri.Status != 403) {
+			if (s.pri.Status != 403) && (s.pri.Status != 200){
 				err := c.WriteJSON(map[string]interface{}{"error": s.pri.Detail.Error, "status": s.pri.Status})
 				if err != nil {
 					log.Println("write:", err)
 				}
 				return nil
+			
+			
 			} else if s.pri.Status == 403 {
 				err := c.WriteJSON(map[string]interface{}{"detail": "internal error", "status": s.pri.Status})
 				if err != nil {
@@ -220,7 +224,7 @@ func WSocketReply(c *websocket.Conn, Val DataInfo) interface{} {
 			}
 		}
 		for j := 0; j < 300; j++ {
-			time.Sleep(6000 * time.Millisecond)
+			time.Sleep(6 * time.Second)
 			err := c.WriteJSON(map[string]interface{}{"msg": "processing in progress",
 				"status": s.pri.Status})
 			if err != nil {
