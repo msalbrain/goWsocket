@@ -51,8 +51,8 @@ type WSocketReturn struct {
 	Pegasus           string
 	Textrank          string
 	Overall_sentiment Sentiment
-	NLP_rating        float32
-	Average_rating    float32
+	NLP_rating        float64
+	Average_rating    float64
 	Count             int
 	Limit             int
 	Skip              int
@@ -135,8 +135,8 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 		cintrcompose.Bert = anlysis["bert"].(string)
 		cintrcompose.Pegasus = anlysis["pegasus"].(string)
 		cintrcompose.Textrank = anlysis["textrank"].(string)
-		cintrcompose.NLP_rating = anlysis["NLP_rating"].(float32)
-		cintrcompose.Average_rating = anlysis["Average_rating"].(float32)
+		cintrcompose.NLP_rating = float64(anlysis["NLP_rating"].(float64))
+		cintrcompose.Average_rating = float64(anlysis["Average_rating"].(float64))
 		if limit == 0 {
 			cintrcompose.Limit = cintrData.Count
 		} else {
