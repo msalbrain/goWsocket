@@ -285,6 +285,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	flag.Parse()
+	log.Println(*addr)
 	log.SetFlags(0)
 	http.HandleFunc("/echo", echo)
 	log.Fatal(http.ListenAndServe(*addr, nil))
