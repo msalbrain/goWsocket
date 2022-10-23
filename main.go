@@ -14,7 +14,7 @@ import (
 	"github.com/msalbrain/goWsocket.git/Db"
 )
 
-var addr = flag.String("addr", "localhost:8080", "http service address")
+var addr = flag.String("addr", "localhost:9001", "http service address")
 
 var upgrader = websocket.Upgrader{} // use default options
 
