@@ -45,7 +45,7 @@ type Word struct {
 	Review_ids []string
 }
 
-type WSocketReturn struct {
+type WSocketBase struct {
 	Product           string
 	Bert              string
 	Pegasus           string
@@ -62,6 +62,12 @@ type WSocketReturn struct {
 	Adj               []Word
 	Verb              []Word
 	// Data              []map[string]interface{}
+}
+
+type WSocketReturn struct {
+	WSocketBase
+	Data              []map[string]interface{}
+	Overall_sentiment map[string]interface{}
 }
 
 type CintrResult struct {
@@ -131,14 +137,15 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 		if err != nil{
 			log.Fatal(err)
 		}
-		fmt.Println(jsonStr)
+		// fmt.Println(jsonStr)
 
-		var cintrcompose WSocketReturn
+		var cintrcompose WSocketBase
 		
 		if err := json.Unmarshal(jsonStr, &cintrcompose); err != nil {
 			panic(err)
 		}
-		fmt.Println(cintrcompose)
+		// fmt.Println(cintrcompose)
+
 
 
 		// cintrData := getCintrData(prodId, limit, skip)
