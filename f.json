@@ -1,0 +1,182 @@
+{
+    "_id": "6354f25bf12c619fe26362d4",
+    "product": "63179a3bc987724acf03ddc8",
+    "bert": "My hands don’t really feel that moisturized long term and my nails are definitelynot any stronger. The huge difference with this one is it makes my nails grow so strong and healthy.",
+    "pegasus": "",
+    "textrank": "This is the hand cream I always come back to after trying just about everything. It made my skin look older after few months of using and the smell is awful.. It works well, but I can’t stand the scent, therefore I will be returning.. Makes your skin so soft. Even when I get acrylic nails taken off this stuff brings my damaged nails back to life. I wasn’t able to use this more than once—the smell was soawful and lingered—even after I washed my hands. The huge difference with this one is it makes my nails grow so strong and healthy. Great smell and it works super well. I would love it if it came unscented. I've been using this for more than a year now and I'm on my 4th bottle; I can't live without it anymore. I find the smell quite light and fresh and it nourishes without burning my dry cracked skin in the winter months.. My hands don’t really feel that moisturized long term and my nails are definitely not any stronger. Honestly, I was super hyped about this because o love their sunscreen and and wanted to try something else. I purchased this hand cream based on the fact that it had great/positive reviews. It almost cuts my breathing with how strong it’s scent is and it’s not a pleasant scent either. I love Clarins products and this one doesn't disappoint.. I absolutely hate the way this cream smells! ",
+    "overall_sentiment": {
+        "neg": 0.067,
+        "neu": 0.69,
+        "pos": 0.243,
+        "compound": 0.9981
+    },
+    "NLP_rating": 3.7,
+    "Average_rating": 3.4,
+    "keyword": [
+        {
+            "word": "cream",
+            "total": 2,
+            "review_ids": [
+                "63179a3b698a73040517fda3",
+                "63179a3b698a73040517fda6"
+            ]
+        }
+    ],
+    "adj": [
+        {
+            "word": "long",
+            "total": 2,
+            "review_ids": [
+                "63179a3b698a73040517fd8e",
+                "63179a3b698a73040517fd95"
+            ]
+        },
+        {
+            "word": "skin",
+            "total": 2,
+            "review_ids": [
+                "63179a3b698a73040517fd8a",
+                "63179a3b698a73040517fd95"
+            ]
+        },
+        {
+            "word": "awful",
+            "total": 2,
+            "review_ids": [
+                "63179a3b698a73040517fd8a",
+                "63179a3b698a73040517fd8c"
+            ]
+        },
+        {
+            "word": "strong",
+            "total": 2,
+            "review_ids": [
+                "63179a3b698a73040517fd98",
+                "63179a3b698a73040517fda6"
+            ]
+        }
+    ],
+    "verb": [
+        {
+            "word": "love",
+            "total": 5,
+            "review_ids": [
+                "63179a3b698a73040517fd8e",
+                "63179a3b698a73040517fd89",
+                "63179a3b698a73040517fd89",
+                "63179a3b698a73040517fd96",
+                "63179a3b698a73040517fda6"
+            ]
+        },
+        {
+            "word": "using",
+            "total": 3,
+            "review_ids": [
+                "63179a3b698a73040517fd8a",
+                "63179a3b698a73040517fd96",
+                "63179a3b698a73040517fda6"
+            ]
+        },
+        {
+            "word": "smell",
+            "total": 3,
+            "review_ids": [
+                "63179a3b698a73040517fd8c",
+                "63179a3b698a73040517fd98",
+                "63179a3b698a73040517fda6"
+            ]
+        },
+        {
+            "word": "work",
+            "total": 3,
+            "review_ids": [
+                "63179a3b698a73040517fda9",
+                "63179a3b698a73040517fd89",
+                "63179a3b698a73040517fd96"
+            ]
+        },
+        {
+            "word": "returning",
+            "total": 2,
+            "review_ids": [
+                "63179a3b698a73040517fd98",
+                "63179a3b698a73040517fda9"
+            ]
+        }
+    ],
+    "count": 756,
+    "limit": 10,
+    "skip": 0,
+    "next": "?limit=10&skip=2",
+    "prev": null,
+    "data": [
+        {
+            "_id": "63179a3b698a73040517fd8e",
+            "authorIDFromMerchant": "164998160",
+            "authorName": "ryan3015",
+            "product": "63179a3bc987724acf03ddc8",
+            "rating": 2,
+            "text": "Honestly, I was super hyped about this because o love their sunscreen and and wanted to try something else. My hands don’t really feel that moisturized long term and my nails are definitely not any stronger. Will finish but wont buy again",
+            "title": "meh.",
+            "createdAt": "2022-09-06T19:06:35.942Z"
+        },
+        {
+            "_id": "63179a3b698a73040517fd8a",
+            "authorIDFromMerchant": "185104544",
+            "authorName": "Ozolina12",
+            "product": "63179a3bc987724acf03ddc8",
+            "rating": 1,
+            "text": "It made my skin look older after few months of using and the smell is awful.",
+            "title": "",
+            "createdAt": "2022-09-06T19:06:35.942Z"
+        },
+        {
+            "_id": "63179a3b698a73040517fd8c",
+            "authorIDFromMerchant": "179265271",
+            "authorName": "tantallum99",
+            "product": "63179a3bc987724acf03ddc8",
+            "rating": 1,
+            "text": "I wasn’t able to use this more than once—the smell was so awful and lingered—even after I washed my hands. It smells like cleaning products. Specifically the ones used to clean public bathrooms.I immediately returned it.", "title" : "Awful smell", "createdAt" : "2022-09-06T19: 06: 35.942Z" }, { "_id" : "63179a3b698a73040517fd98", "authorIDFromMerchant" : "137414798", "authorName" : "robynbella", "product" : "63179a3bc987724acf03ddc8", "rating" : 2, "text" : "I purchased this hand cream based on the fact that it had great/positive reviews. I absolutely hate the way this cream smells! It almost cuts my breathing with how strong it’s scent is and it’s not a pleasant scent either. Reminds me of old woman perfume in a hand cream. Unfortunately i will be returning.", "title" : "smells awful", "createdAt" : "2022-09-06T19: 06: 35.942Z" }, { "_id" : "63179a3b698a73040517fd95", "authorIDFromMerchant" : "141006924", "authorName" : "SunnySap", "product" : "63179a3bc987724acf03ddc8", "rating" : 5, "text" : "It leaves skin silky smooth for a long time. So glad I found it!", "title" : "My favorite hand cream!", "createdAt" : "2022-09-06T19: 06: 35.942Z" }, { "_id" : "63179a3b698a73040517fda9", "authorIDFromMerchant" : "109392569", "authorName" : "Cheri625", "product" : "63179a3bc987724acf03ddc8", "rating" : 3, "text" : "It works well, but I can’t stand the scent, therefore I will be returning.", "title" : "", "createdAt" : "2022-09-06T19: 06: 35.943Z"
+        },
+        {
+            "_id": "63179a3b698a73040517fd89",
+            "authorIDFromMerchant": "188695902",
+            "authorName": "Grammegirl",
+            "product": "63179a3bc987724acf03ddc8",
+            "rating": 5,
+            "text": "Makes your skin so soft. It does have perfume in it that bothers my hands. I would love it if it came unscented. I gave it to my daughter because she works in the health field. She loves it too.",
+            "title": "Nice on your hands",
+            "createdAt": "2022-09-06T19:06:35.942Z"
+        },
+        {
+            "_id": "63179a3b698a73040517fd96",
+            "authorIDFromMerchant": "138856249",
+            "authorName": "ARJP",
+            "product": "63179a3bc987724acf03ddc8",
+            "rating": 5,
+            "text": "I've been using this for over a year. Huge fan and this was my second purchase. Great smell and it works super well. I love Clarins products and this one doesn't disappoint.",
+            "title": "Does Exactly What it Promises",
+            "createdAt": "2022-09-06T19:06:35.942Z"
+        },
+        {
+            "_id": "63179a3b698a73040517fda3",
+            "authorIDFromMerchant": "115347606",
+            "authorName": "whogrrl",
+            "product": "63179a3bc987724acf03ddc8",
+            "rating": 5,
+            "text": "This is the hand cream I always come back to after trying just about everything. I find the smell quite light and fresh and it nourishes without burning my dry cracked skin in the winter months.",
+            "title": "",
+            "createdAt": "2022-09-06T19:06:35.943Z"
+        },
+        {
+            "_id": "63179a3b698a73040517fda6",
+            "authorIDFromMerchant": "114264728",
+            "authorName": "charlottemcnair",
+            "product": "63179a3bc987724acf03ddc8",
+            "rating": 5,
+            "text": "I love this stuff. I'd never been picky about hand creams until I discovered this. The huge difference with this one is it makes my nails grow so strong and healthy. I've been using this for more than a year now and I'm on my 4th bottle; I can't live without it anymore. Even when I get acrylic nails taken off this stuff brings my damaged nails back to life. It smells great too!",
+            "title": "Best Hand Cream Ever!",
+            "createdAt": "2022-09-06T19:06:35.943Z"
+        }
+    ]
+}
