@@ -127,6 +127,7 @@ func CheckDb(prodId string) ([]bson.D){
 
 	for _, doc := range results {
         fmt.Println(doc)
+		fmt.Print("\n\n")
     }
 	return results	
 }
