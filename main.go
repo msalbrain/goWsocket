@@ -116,7 +116,9 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 		ma := doc.Map()
 		fmt.Printf("product: %s, limit: %d, skip: %d", prodId, ma["limit"], ma["skip"])
 		fmt.Print("\n")
-		if ma["limit"] == limit && ma["skip"] == skip {
+		if int(ma["limit"].(int)) == int(limit) && int(ma["skip"].(int)) == skip {
+			fmt.Printf("product: %s, limit: %d, skip: %d", prodId, ma["limit"], ma["skip"])
+			fmt.Print("\n")
 			is = true
 			anlysis = ma
 			break
