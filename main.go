@@ -114,9 +114,12 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 	var anlysis map[string]interface{}
 	for _, doc := range res {
 		ma := doc.Map()
+		fmt.Printf("product: %s, limit: %d, skip: %d", prodId, ma["limit"], ma["skip"])
+		fmt.Print("\n")
 		if ma["limit"] == limit && ma["skip"] == skip {
 			is = true
 			anlysis = ma
+			break
 		}
 
 	}
@@ -142,22 +145,20 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 		return SprocessReturn{ws: cintrcompose}
 
 	} else {
-		link := fmt.Sprintf("http://3.235.109.178/private/api/reviews/?productId=%s&limit=%v&skip=%v&access_token=85e53c1f044bb27455557fd3cdf",
-			prodId, limit, skip)
-
-		response, err := http.Get(link)
-
-		if err != nil {
-			log.Println(err.Error())
-		}
-
-		responseData, err := ioutil.ReadAll(response.Body)
-		fmt.Println(string(responseData))
-		var d PrivateApi
-		err = json.Unmarshal(responseData, &d)
-		d.Status = response.StatusCode
-		return SprocessReturn{pri: d}
+		// link := fmt.Sprintf("http://3.235.109.178/private/api/reviews/?productId=%s&limit=%v&skip=%v&access_token=85e53c1f044bb27455557fd3cdf",
+		// 	prodId, limit, skip)
+		// response, err := http.Get(link)
+		// if err != nil {
+		// 	log.Println(err.Error())
+		// }
+		// responseData, err := ioutil.ReadAll(response.Body)
+		// fmt.Println(string(responseData))
+		// var d PrivateApi
+		// err = json.Unmarshal(responseData, &d)
+		// d.Status = response.StatusCode
+		// return SprocessReturn{pri: d}
 	}
+	return SprocessReturn{}
 
 }
 
@@ -204,6 +205,6 @@ func main() {
 	// c := startProcess("63179a3bc987724acf03ddc8", 4, 4)
 	// fmt.Println(c)
 	// getCintrData("63179a3bc987724acf03ddc8", 4, 4)
-	
+
 	fmt.Println(startProcess("63179a3bc987724acf03ddc8", 2, 0))
 }
