@@ -109,7 +109,7 @@ func CheckDb(prodId string) ([]bson.D){
     var filter, option interface{}
      
     filter = bson.D{
-        {Key: "dp_name", Value: prodId},
+        {Key: "product", Value: prodId},
     }
      
 	cursor, err := query(client, ctx, "kword",
