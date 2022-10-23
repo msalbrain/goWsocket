@@ -61,7 +61,7 @@ type WSocketReturn struct {
 	Keyword           []Word
 	Adj               []Word
 	Verb              []Word
-	Data              []CintrData
+	// Data              []CintrData
 }
 
 type CintrResult struct {
