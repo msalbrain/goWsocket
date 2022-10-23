@@ -127,22 +127,35 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 	}
 
 	if is == true {
-		var cintrcompose WSocketReturn
-		cintrData := getCintrData(prodId, limit, skip)
-		cintrcompose.Data = cintrData.Data
-		cintrcompose.Count = cintrData.Count
-		cintrcompose.Product = anlysis["product"].(string)
-		cintrcompose.Bert = anlysis["bert"].(string)
-		cintrcompose.Pegasus = anlysis["pegasus"].(string)
-		cintrcompose.Textrank = anlysis["textrank"].(string)
-		cintrcompose.NLP_rating = float64(anlysis["NLP_rating"].(float64))
-		cintrcompose.Average_rating = float64(anlysis["Average_rating"].(float64))
-		if limit == 0 {
-			cintrcompose.Limit = cintrData.Count
-		} else {
-			cintrcompose.Limit = limit
+		jsonStr, err := json.Marshal(anlysis)
+		if err != nil{
+			log.Fatal(err)
 		}
-		cintrcompose.Skip = anlysis["skip"].(int)
+		fmt.Println(jsonStr)
+
+		var cintrcompose WSocketReturn
+		
+		if err := json.Unmarshal(jsonStr, &cintrcompose); err != nil {
+			panic(err)
+		}
+		fmt.Println(cintrcompose)
+
+
+		// cintrData := getCintrData(prodId, limit, skip)
+		// cintrcompose.Data = cintrData.Data
+		// cintrcompose.Count = cintrData.Count
+		// cintrcompose.Product = anlysis["product"].(string)
+		// cintrcompose.Bert = anlysis["bert"].(string)
+		// cintrcompose.Pegasus = anlysis["pegasus"].(string)
+		// cintrcompose.Textrank = anlysis["textrank"].(string)
+		// cintrcompose.NLP_rating = float64(anlysis["NLP_rating"].(float64))
+		// cintrcompose.Average_rating = float64(anlysis["Average_rating"].(float64))
+		// if limit == 0 {
+		// 	cintrcompose.Limit = cintrData.Count
+		// } else {
+		// 	cintrcompose.Limit = limit
+		// }
+		// cintrcompose.Skip = anlysis["skip"].(int)
 
 		return SprocessReturn{ws: cintrcompose}
 
