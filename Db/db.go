@@ -112,7 +112,7 @@ func CheckDb(prodId string) ([]bson.D){
         {Key: "dp_name", Value: prodId},
     }
      
-	cursor, err := query(client, ctx, "bot1",
+	cursor, err := query(client, ctx, "kword",
 		"cache", filter, option)
 
 	if err != nil {
@@ -125,6 +125,9 @@ func CheckDb(prodId string) ([]bson.D){
 		panic(err)
 	}
 
+	for _, doc := range results {
+        fmt.Println(doc)
+    }
 	return results	
 }
 
