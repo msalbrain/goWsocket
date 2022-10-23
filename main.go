@@ -145,8 +145,10 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 			panic(err)
 		}
 		// fmt.Println(cintrcompose)
+		var cintret WSocketReturn = WSocketReturn{cintrcompose, nil, nil}
 
-
+		return SprocessReturn{ws: cintret}
+		
 
 		// cintrData := getCintrData(prodId, limit, skip)
 		// cintrcompose.Data = cintrData.Data
@@ -164,7 +166,6 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 		// }
 		// cintrcompose.Skip = anlysis["skip"].(int)
 
-		return SprocessReturn{ws: cintrcompose}
 
 	} else {
 		// link := fmt.Sprintf("http://3.235.109.178/private/api/reviews/?productId=%s&limit=%v&skip=%v&access_token=85e53c1f044bb27455557fd3cdf",
