@@ -264,6 +264,11 @@ func echo(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
+
+		if(V.Limit > 50){
+			V.Limit = 50
+		}
+
 		log.Printf("recv: \nproduct: %v, limit: %v, skip: %v", V.ProductId,
 			V.Limit, V.Skip)
 
