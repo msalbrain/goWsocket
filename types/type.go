@@ -30,7 +30,7 @@ type Word struct {
 type WSocketBase struct {
 	Product  string `json:"product"`
 	Bert     string `json:"bert"`
-	Pegasus  string `json:"pegasus"`
+	// Pegasus  string `json:"pegasus"`
 	Textrank string `json:"textrank"`
 	Overall_sentiment Sentiment `json:"overall_sentiment"`
 	NLP_rating     float64     `json:"NLP_rating"`

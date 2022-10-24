@@ -140,7 +140,7 @@ func WSocketReply(c *websocket.Conn, Val Ws.DataInfo) interface{} {
 				return nil
 
 			} else if s.Pri.Status == 403 {
-				err := c.WriteJSON(map[string]interface{}{"detail": "internal error", "status": s.Pri.Status})
+				err := c.WriteJSON(map[string]interface{}{"detail": "internal error", "status": 500})
 				if err != nil {
 					log.Println("write:", err)
 				}
@@ -153,7 +153,7 @@ func WSocketReply(c *websocket.Conn, Val Ws.DataInfo) interface{} {
 			}
 		}
 		for j := 0; j < 300; j++ {
-			time.Sleep(6 * time.Second)
+			time.Sleep(3 * time.Second)
 			err := c.WriteJSON(map[string]interface{}{"msg": "processing in progress",
 				"status": s.Pri.Status})
 			if err != nil {
@@ -198,7 +198,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 	defer c.Close()
 	for {
 		// var V map[string]interface{}
-		c.WriteJSON(map[string]interface{}{"msg": "data recieved", "status": 200})
+		c.WriteJSON(map[string]interface{}{"msg": "data received", "status": 200})
 		var V Ws.DataInput
 		err := c.ReadJSON(&V)
 
