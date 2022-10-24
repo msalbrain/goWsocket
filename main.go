@@ -24,9 +24,9 @@ var addr = flag.String("addr", "0.0.0.0:9001", "http service address")
 var upgrader = websocket.Upgrader{} // use default options
 
 func getCintrData(prodId string, limit int, skip int) Ws.CintrResult {
-	configure, err := conf.NewConfig("config.yml")
+	configure, err := conf.NewConfig("config.yaml")
 	if err != nil{
-		log.Fatal("seem configurations are having issues")	
+		log.Fatal(err)	
 	}
 	url := fmt.Sprintf(configure.Server.DataLink, prodId, limit, skip)
 	response, err := http.Get(url)
