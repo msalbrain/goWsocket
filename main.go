@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 	"time"
-
+	"sync"
 	// "os"
 	"fmt"
 	"io/ioutil"
@@ -175,6 +175,7 @@ func WSocketReply(c *websocket.Conn, Val Ws.DataInfo) interface{} {
 }
 
 func echo(w http.ResponseWriter, r *http.Request) {
+	var Wg sync.WaitGroup
 	configure, err := conf.NewConfig("/home/ubuntu/test/goWsocket/config.yaml")
 	if err != nil{
 		// log.Fatal("this is main")
@@ -193,7 +194,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 	} else {
 		log.Print("upgrade successfull, new connection made")
 	}
-
+	
 	defer c.Close()
 	for {
 		// var V map[string]interface{}
@@ -214,9 +215,12 @@ func echo(w http.ResponseWriter, r *http.Request) {
 
 		log.Printf("recv: \nproduct: %v, limit: %v, skip: %v", V.ProductId,
 			V.Limit, V.Skip)
-
-		WSocketReply(c, Ws.DataInfo{ProdId: V.ProductId,
+		Wg.Add(1)
+		go func(){
+			WSocketReply(c, Ws.DataInfo{ProdId: V.ProductId,
 			Skip: V.Skip, Limit: V.Limit})
+			Wg.Done()
+		}()
 
 
 		if err != nil {
