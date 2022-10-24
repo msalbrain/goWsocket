@@ -13,6 +13,7 @@ type Config struct {
 		Route string    `yaml:"route"`
 		DataLink string `yaml:"datalink"`
 		PrivateLink string `yaml:"privatelink"`
+		AccessToken string `yaml:"access_token"`
 	} `yaml:"server"`
 
 	Mongo struct {

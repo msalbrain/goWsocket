@@ -4,6 +4,7 @@ server:
   route:  
   datalink:
   privatelink:
+  access_token:
 
 
 

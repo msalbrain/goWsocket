@@ -173,7 +173,16 @@ func WSocketReply(c *websocket.Conn, Val Ws.DataInfo) interface{} {
 }
 
 func echo(w http.ResponseWriter, r *http.Request) {
+	configure, err := conf.NewConfig("/home/ubuntu/test/goWsocket/config.yaml")
+	if err != nil{
+		// log.Fatal("this is main")
+		log.Fatal(err)	
+	}
 	c, err := upgrader.Upgrade(w, r, nil)
+	auth := r.Header.Get("access_token")
+	if auth != configure.Server.AccessToken{
+		c.WriteJSON(map[string]interface{}{"error": "couldn't validate token", "status": 401})
+	}
 
 	if err != nil {
 		log.Print("upgrade:", err)
