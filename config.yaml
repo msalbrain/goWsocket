@@ -1,0 +1,15 @@
+server:
+  port:  
+  url:  # localhost:8983
+  route:  
+  datalink:
+  privatelink:
+
+
+
+mongodb:
+  db: 
+  collection: 
+  url:  # mongodb+srv://localhost:27017     must be Replica Set 
+  timeout:  # 3 it is in seconds
+  field: # the field of comparison 

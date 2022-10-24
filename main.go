@@ -12,94 +12,23 @@ import (
 
 	"github.com/gorilla/websocket"
 	"github.com/msalbrain/goWsocket.git/Db"
+	"github.com/msalbrain/goWsocket.git/conf"
+	Ws "github.com/msalbrain/goWsocket.git/types"
 )
+
+
+
 
 var addr = flag.String("addr", "0.0.0.0:9001", "http service address")
 
 var upgrader = websocket.Upgrader{} // use default options
 
-type Msg struct {
-	Msg string
-}
-
-type CintrData struct {
-	AuthorIDFromFromMerchant string `json:"authorIDFromMerchant"`
-	AuthorName               string `json:"authorName"`
-	Product                  string `json:"product"`
-	Rating                   int    `json:"rating"`
-	CreatedAt                string `json:"createdAt"`
-	Text                     string `json:"text"`
-	Title                    string `json:"title"`
-}
-
-type Sentiment struct {
-	Neg      float32
-	Neu      float32
-	Pos      float32
-	Compound float32
-}
-
-type Word struct {
-	Word       string
-	Total      int
-	Review_ids []string
-}
-
-type WSocketBase struct {
-	Product  string `json:"product"`
-	Bert     string `json:"bert"`
-	Pegasus  string `json:"pegasus"`
-	Textrank string `json:"textrank"`
-	// Overall_sentiment map[string]interface{}
-	NLP_rating     float64     `json:"NLP_rating"`
-	Average_rating float64     `json:"Average_rating"`
-	Count          int         `json:"count"`
-	Limit          int         `json:"limit"`
-	Skip           int         `json:"skip"`
-	Next           interface{} `json:"next"`
-	Prev           interface{} `json:"prev"`
-	Keyword        []Word      `json:"keyword"`
-	Adj            []Word      `json:"adj"`
-	Verb           []Word      `json:"verb"`
-	// Data              []map[string]interface{}
-}
-
-type WSocketReturn struct {
-	WSocketBase
-	Data              []CintrData            `json:"data"`
-	Overall_sentiment map[string]interface{} `json:"overall_sentiment"`
-	Status            int                    `json:"status"`
-}
-
-type CintrResult struct {
-	Count  int
-	Data   []CintrData
-	Status int
-}
-
-type PartialError struct {
-	Error string
-}
-
-type PrivateApi struct {
-	Msg    string
-	Detail PartialError
-	Status int
-}
-
-type DataInfo struct {
-	ProdId string
-	Skip   int
-	Limit  int
-}
-type DataInput struct {
-	ProductId string `json:"productId"`
-	Skip      int    `json:"skip"`
-	Limit     int    `json:"limit"`
-}
-
-func getCintrData(prodId string, limit int, skip int) CintrResult {
-	url := fmt.Sprintf("https://cintr.herokuapp.com/api/reviews?productId=%s&limit=%d&skip=%d", prodId, limit, skip)
+func getCintrData(prodId string, limit int, skip int) Ws.CintrResult {
+	configure, err := conf.NewConfig("config.yml")
+	if err != nil{
+		log.Fatal("seem configurations are having issues")	
+	}
+	url := fmt.Sprintf(configure.Server.DataLink, prodId, limit, skip)
 	response, err := http.Get(url)
 
 	if err != nil {
@@ -108,15 +37,10 @@ func getCintrData(prodId string, limit int, skip int) CintrResult {
 	}
 
 	responseData, err := ioutil.ReadAll(response.Body)
-	var d CintrResult
+	var d Ws.CintrResult
 	err = json.Unmarshal(responseData, &d)
 
 	return d
-}
-
-type SprocessReturn struct {
-	ws  WSocketReturn
-	pri PrivateApi
 }
 
 func confirmInDb(prodId string, limit int, skip int) (bool, map[string]interface{}) {
@@ -137,8 +61,12 @@ func confirmInDb(prodId string, limit int, skip int) (bool, map[string]interface
 	return is, anlysis
 }
 
-func startProcess(prodId string, limit int, skip int) SprocessReturn {
-
+func startProcess(prodId string, limit int, skip int) Ws.SprocessReturn {
+	configure, err := conf.NewConfig("./config.yaml")
+	if err != nil{
+		log.Fatal("this is start process")
+		log.Fatal(err)	
+	}
 	//NOTE: The spelling below isn't analysis
 	is, anlysis := confirmInDb(prodId, limit, skip)
 
@@ -149,7 +77,7 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 		}
 		// fmt.Println(jsonStr)
 
-		var cintrcompose WSocketBase
+		var cintrcompose Ws.WSocketBase
 
 		if err := json.Unmarshal(jsonStr, &cintrcompose); err != nil {
 			panic(err)
@@ -160,12 +88,12 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 		}
 		g := getCintrData(prodId, limit, skip)
 
-		var cintret WSocketReturn = WSocketReturn{cintrcompose, g.Data, nil, 200}
+		var cintret Ws.WSocketReturn = Ws.WSocketReturn{WSocketBase: cintrcompose, Data: g.Data, Overall_sentiment: nil, Status: 200}
 
-		return SprocessReturn{ws: cintret, pri: PrivateApi{}}
+		return Ws.SprocessReturn{Ws: cintret, Pri: Ws.PrivateApi{}}
 
 	} else {
-		link := fmt.Sprintf("http://3.235.109.178/private/api/reviews/?productId=%s&limit=%v&skip=%v&access_token=85e53c1f044bb27455557fd3cdf",
+		link := fmt.Sprintf(configure.Server.PrivateLink,
 			prodId, limit, skip)
 		response, err := http.Get(link)
 		if err != nil {
@@ -174,18 +102,18 @@ func startProcess(prodId string, limit int, skip int) SprocessReturn {
 		responseData, err := ioutil.ReadAll(response.Body)
 		fmt.Printf("pass by private with productId '%s', limit '%v', skip '%v'\n", prodId, limit, skip)
 		// fmt.Println(string(responseData))
-		
-		var d PrivateApi
+
+		var d Ws.PrivateApi
 		err = json.Unmarshal(responseData, &d)
 		d.Status = response.StatusCode
-		return SprocessReturn{ws: WSocketReturn{}, pri: d}
+		return Ws.SprocessReturn{Ws: Ws.WSocketReturn{}, Pri: d}
 	}
 
 }
 
-func WSocketReply(c *websocket.Conn, Val DataInfo) interface{} {
+func WSocketReply(c *websocket.Conn, Val Ws.DataInfo) interface{} {
 	s := startProcess(Val.ProdId, Val.Limit, Val.Skip)
-	if (s.pri == PrivateApi{}) && (s.ws.Count == 0) {
+	if (s.Pri == Ws.PrivateApi{}) && (s.Ws.Count == 0) {
 		err := c.WriteJSON(map[string]interface{}{"error": "internal error", "status": 500})
 		if err != nil {
 			log.Println("write:", err)
@@ -193,31 +121,30 @@ func WSocketReply(c *websocket.Conn, Val DataInfo) interface{} {
 		}
 		return nil
 	}
-	if s.ws.Count != 0 {
-		err := c.WriteJSON(s.ws)
+	if s.Ws.Count != 0 {
+		err := c.WriteJSON(s.Ws)
 		if err != nil {
 			log.Println("write:", err)
 
 		}
 		return nil
 	} else {
-		if (s.pri != PrivateApi{}) {
-			if (s.pri.Status != 403) && (s.pri.Status != 200){
-				err := c.WriteJSON(map[string]interface{}{"error": s.pri.Detail.Error, "status": s.pri.Status})
+		if (s.Pri != Ws.PrivateApi{}) {
+			if (s.Pri.Status != 403) && (s.Pri.Status != 200) {
+				err := c.WriteJSON(map[string]interface{}{"error": s.Pri.Detail.Error, "status": s.Pri.Status})
 				if err != nil {
 					log.Println("write:", err)
 				}
 				return nil
-			
-			
-			} else if s.pri.Status == 403 {
-				err := c.WriteJSON(map[string]interface{}{"detail": "internal error", "status": s.pri.Status})
+
+			} else if s.Pri.Status == 403 {
+				err := c.WriteJSON(map[string]interface{}{"detail": "internal error", "status": s.Pri.Status})
 				if err != nil {
 					log.Println("write:", err)
 				}
 				return nil
-			} else if s.pri.Status == 200 {
-				err := c.WriteJSON(map[string]interface{}{"msg": s.pri.Msg, "status": s.pri.Status})
+			} else if s.Pri.Status == 200 {
+				err := c.WriteJSON(map[string]interface{}{"msg": s.Pri.Msg, "status": s.Pri.Status})
 				if err != nil {
 					log.Println("write:", err)
 				}
@@ -226,13 +153,13 @@ func WSocketReply(c *websocket.Conn, Val DataInfo) interface{} {
 		for j := 0; j < 300; j++ {
 			time.Sleep(6 * time.Second)
 			err := c.WriteJSON(map[string]interface{}{"msg": "processing in progress",
-				"status": s.pri.Status})
+				"status": s.Pri.Status})
 			if err != nil {
 				log.Println("write:", err)
 			}
 			if is, analysis := confirmInDb(Val.ProdId, Val.Limit, Val.Skip); is == true {
 				st := startProcess(Val.ProdId, Val.Limit, Val.Skip)
-				err := c.WriteJSON(st.ws)
+				err := c.WriteJSON(st.Ws)
 				if err != nil {
 					if analysis == nil {
 					}
@@ -247,15 +174,18 @@ func WSocketReply(c *websocket.Conn, Val DataInfo) interface{} {
 
 func echo(w http.ResponseWriter, r *http.Request) {
 	c, err := upgrader.Upgrade(w, r, nil)
+
 	if err != nil {
 		log.Print("upgrade:", err)
 		return
+	} else {
+		log.Print("upgrade successfull, new connection made")
 	}
 
 	defer c.Close()
 	for {
 		// var V map[string]interface{}
-		var V DataInput
+		var V Ws.DataInput
 		err := c.ReadJSON(&V)
 
 		fmt.Println(V)
@@ -264,17 +194,14 @@ func echo(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-
-		if(V.Limit > 50){
+		if V.Limit > 50 {
 			V.Limit = 50
 		}
 
 		log.Printf("recv: \nproduct: %v, limit: %v, skip: %v", V.ProductId,
 			V.Limit, V.Skip)
 
-
-
-		WSocketReply(c, DataInfo{ProdId: V.ProductId,
+		WSocketReply(c, Ws.DataInfo{ProdId: V.ProductId,
 			Skip: V.Skip, Limit: V.Limit})
 
 		// log.Printf("recv: \nproduct: %v, limit: %v, skip: %v", V["productId"].(string),
@@ -293,10 +220,15 @@ func echo(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	configure, err := conf.NewConfig("config.yaml")
+	if err != nil{
+		log.Fatal("this is main")
+		log.Fatal(err)	
+	}
 	flag.Parse()
 	log.Println(*addr)
 	log.SetFlags(0)
-	http.HandleFunc("/echo/", echo)
+	http.HandleFunc(configure.Server.Route, echo)
 	log.Fatal(http.ListenAndServe(*addr, nil))
 	// c := startProcess("63179a3bc987724acf03ddc8", 4, 4)
 	// fmt.Println(c)

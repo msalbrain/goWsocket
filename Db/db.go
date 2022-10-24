@@ -1,18 +1,21 @@
 package Db
 
+
+
+
+
+
 import (
 	"context"
 	"fmt"
+	"time"
+
+	"github.com/msalbrain/goWsocket.git/conf"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"time"
 )
-
-
-
-
 
 // This is a user defined method to close resources.
 // This method closes mongoDB connection and cancel context.
@@ -94,26 +97,24 @@ func query(client *mongo.Client, ctx context.Context,
 	return
 }
 
+func CheckDb(prodId string) []bson.D {
+	configure, err := conf.NewConfig("config.yaml")
 
-
-
-func CheckDb(prodId string) ([]bson.D){
-
-	client, ctx, cancel, err := connect("mongodb://localhost:27017")
+	client, ctx, cancel, err := connect(configure.Mongo.Url)
 	if err != nil {
 		panic(err)
 	}
 
 	defer close(client, ctx, cancel)
 
-    var filter, option interface{}
-     
-    filter = bson.D{
-        {Key: "product", Value: prodId},
-    }
-     
-	cursor, err := query(client, ctx, "kword",
-		"cache", filter, option)
+	var filter, option interface{}
+
+	filter = bson.D{
+		{Key: configure.Mongo.Field, Value: prodId},
+	}
+
+	cursor, err := query(client, ctx, configure.Mongo.Db,
+		configure.Mongo.Collection, filter, option)
 
 	if err != nil {
 		panic(err)
@@ -125,7 +126,5 @@ func CheckDb(prodId string) ([]bson.D){
 		panic(err)
 	}
 
-	return results	
+	return results
 }
-
-
