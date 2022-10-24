@@ -64,7 +64,7 @@ func confirmInDb(prodId string, limit int, skip int) (bool, map[string]interface
 func startProcess(prodId string, limit int, skip int) Ws.SprocessReturn {
 	configure, err := conf.NewConfig("./config.yaml")
 	if err != nil{
-		log.Fatal("this is start process")
+		// log.Fatal("this is start process")
 		log.Fatal(err)	
 	}
 	//NOTE: The spelling below isn't analysis
@@ -222,7 +222,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 func main() {
 	configure, err := conf.NewConfig("config.yaml")
 	if err != nil{
-		log.Fatal("this is main")
+		// log.Fatal("this is main")
 		log.Fatal(err)	
 	}
 	flag.Parse()

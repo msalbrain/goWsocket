@@ -40,9 +40,9 @@ type WSocketBase struct {
 	Skip           int         `json:"skip"`
 	Next           interface{} `json:"next"`
 	Prev           interface{} `json:"prev"`
-	Keyword        []Word      `json:"keyword"`
-	Adj            []Word      `json:"adj"`
-	Verb           []Word      `json:"verb"`
+	Keyword        interface{} `json:"keyword"`
+	Adj            interface{} `json:"adj"`
+	Verb           interface{} `json:"verb"`
 	// Data              []map[string]interface{}
 }
 
