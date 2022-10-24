@@ -38,8 +38,8 @@ type WSocketBase struct {
 	Count          int         `json:"count"`
 	Limit          int         `json:"limit"`
 	Skip           int         `json:"skip"`
-	Next           interface{} `json:"next"`
-	Prev           interface{} `json:"prev"`
+	// Next           interface{} `json:"next"`
+	// Prev           interface{} `json:"prev"`
 	Keyword        []Word `json:"keyword"`
 	Adj            []Word `json:"adj"`
 	Verb           []Word `json:"verb"`

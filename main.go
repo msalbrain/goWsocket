@@ -197,16 +197,17 @@ func echo(w http.ResponseWriter, r *http.Request) {
 	defer c.Close()
 	for {
 		// var V map[string]interface{}
+		c.WriteJSON(map[string]interface{}{"msg": "data recieved", "status": 200})
 		var V Ws.DataInput
 		err := c.ReadJSON(&V)
 
-		
 		fmt.Println(V)
 		if err != nil {
 			log.Println("read:", err)
 			break
 		}
 
+		
 		if V.Limit > 50 {
 			V.Limit = 50
 		}
@@ -214,17 +215,10 @@ func echo(w http.ResponseWriter, r *http.Request) {
 		log.Printf("recv: \nproduct: %v, limit: %v, skip: %v", V.ProductId,
 			V.Limit, V.Skip)
 
-		WSocketReply(c, Ws.DataInfo{ProdId: V.ProductId,
+		go WSocketReply(c, Ws.DataInfo{ProdId: V.ProductId,
 			Skip: V.Skip, Limit: V.Limit})
 
-		// log.Printf("recv: \nproduct: %v, limit: %v, skip: %v", V["productId"].(string),
-		// 				V["skip"].(int), V["productId"].(int))
 
-		// WSocketReply(c, DataInfo{ProdId: V["productId"].(string),
-		// 	Skip: V["skip"].(int), Limit: V["limit"].(int)})
-		// err = c.WriteJSON(WSocketReturn{})
-
-		// err = c.WriteMessage(websocket.TextMessage, jsonStr)
 		if err != nil {
 			log.Println("write:", err)
 			break
