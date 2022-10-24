@@ -100,7 +100,7 @@ func query(client *mongo.Client, ctx context.Context,
 func CheckDb(prodId string) []bson.D {
 	configure, err := conf.NewConfig("config.yaml")
 
-	client, ctx, cancel, err := connect(configure.Mongo.Url)
+	client, ctx, cancel, err := connect("mongodb://localhost:27017")
 	if err != nil {
 		panic(err)
 	}
