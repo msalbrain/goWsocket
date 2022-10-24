@@ -32,7 +32,7 @@ type WSocketBase struct {
 	Bert     string `json:"bert"`
 	Pegasus  string `json:"pegasus"`
 	Textrank string `json:"textrank"`
-	// Overall_sentiment map[string]interface{}
+	Overall_sentiment Sentiment `json:"overall_sentiment"`
 	NLP_rating     float64     `json:"NLP_rating"`
 	Average_rating float64     `json:"Average_rating"`
 	Count          int         `json:"count"`
@@ -49,7 +49,6 @@ type WSocketBase struct {
 type WSocketReturn struct {
 	WSocketBase
 	Data              []CintrData            `json:"data"`
-	Overall_sentiment Sentiment `json:"overall_sentiment"`
 	Status            int                    `json:"status"`
 }
 

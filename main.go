@@ -90,7 +90,7 @@ func startProcess(prodId string, limit int, skip int) Ws.SprocessReturn {
 		}
 		g := getCintrData(prodId, limit, skip)
 
-		var cintret Ws.WSocketReturn = Ws.WSocketReturn{WSocketBase: cintrcompose, Data: g.Data, Overall_sentiment: Ws.Sentiment{}, Status: 200}
+		var cintret Ws.WSocketReturn = Ws.WSocketReturn{WSocketBase: cintrcompose, Data: g.Data, Status: 200}
 
 		return Ws.SprocessReturn{Ws: cintret, Pri: Ws.PrivateApi{}}
 
