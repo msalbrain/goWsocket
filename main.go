@@ -178,7 +178,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 		// log.Fatal("this is main")
 		log.Fatal(err)	
 	}
-	auth := r.Header.Get("access_token")
+	auth := r.URL.Query().Get("access_token")
 	// var b bool
 	// if auth != configure.Server.AccessToken{
 	// 	b = true
