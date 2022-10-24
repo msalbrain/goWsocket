@@ -3,9 +3,11 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	// "go/types"
 	"log"
 	"net/http"
 	"time"
+
 	// "os"
 	"fmt"
 	"io/ioutil"
@@ -88,7 +90,7 @@ func startProcess(prodId string, limit int, skip int) Ws.SprocessReturn {
 		}
 		g := getCintrData(prodId, limit, skip)
 
-		var cintret Ws.WSocketReturn = Ws.WSocketReturn{WSocketBase: cintrcompose, Data: g.Data, Overall_sentiment: nil, Status: 200}
+		var cintret Ws.WSocketReturn = Ws.WSocketReturn{WSocketBase: cintrcompose, Data: g.Data, Overall_sentiment: Ws.Sentiment{}, Status: 200}
 
 		return Ws.SprocessReturn{Ws: cintret, Pri: Ws.PrivateApi{}}
 
