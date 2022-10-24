@@ -182,6 +182,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 	auth := r.Header.Get("access_token")
 	if auth != configure.Server.AccessToken{
 		c.WriteJSON(map[string]interface{}{"error": "couldn't validate token", "status": 401})
+		c.Close()
 	}
 
 	if err != nil {
@@ -197,6 +198,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 		var V Ws.DataInput
 		err := c.ReadJSON(&V)
 
+		
 		fmt.Println(V)
 		if err != nil {
 			log.Println("read:", err)
