@@ -40,16 +40,16 @@ type WSocketBase struct {
 	Skip           int         `json:"skip"`
 	Next           interface{} `json:"next"`
 	Prev           interface{} `json:"prev"`
-	Keyword        interface{} `json:"keyword"`
-	Adj            interface{} `json:"adj"`
-	Verb           interface{} `json:"verb"`
+	Keyword        []Word `json:"keyword"`
+	Adj            []Word `json:"adj"`
+	Verb           []Word `json:"verb"`
 	// Data              []map[string]interface{}
 }
 
 type WSocketReturn struct {
 	WSocketBase
 	Data              []CintrData            `json:"data"`
-	Overall_sentiment map[string]interface{} `json:"overall_sentiment"`
+	Overall_sentiment Sentiment `json:"overall_sentiment"`
 	Status            int                    `json:"status"`
 }
 
