@@ -215,7 +215,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 		log.Printf("recv: \nproduct: %v, limit: %v, skip: %v", V.ProductId,
 			V.Limit, V.Skip)
 
-		go WSocketReply(c, Ws.DataInfo{ProdId: V.ProductId,
+		WSocketReply(c, Ws.DataInfo{ProdId: V.ProductId,
 			Skip: V.Skip, Limit: V.Limit})
 
 
