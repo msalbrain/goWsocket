@@ -24,7 +24,7 @@ var addr = flag.String("addr", "0.0.0.0:9001", "http service address")
 var upgrader = websocket.Upgrader{} // use default options
 
 func getCintrData(prodId string, limit int, skip int) Ws.CintrResult {
-	configure, err := conf.NewConfig("config.yaml")
+	configure, err := conf.NewConfig("/home/ubuntu/test/goWsocket/config.yaml")
 	if err != nil{
 		log.Fatal(err)	
 	}
@@ -62,7 +62,7 @@ func confirmInDb(prodId string, limit int, skip int) (bool, map[string]interface
 }
 
 func startProcess(prodId string, limit int, skip int) Ws.SprocessReturn {
-	configure, err := conf.NewConfig("./config.yaml")
+	configure, err := conf.NewConfig("/home/ubuntu/test/goWsocket/config.yaml")
 	if err != nil{
 		// log.Fatal("this is start process")
 		log.Fatal(err)	
@@ -220,7 +220,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	configure, err := conf.NewConfig("config.yaml")
+	configure, err := conf.NewConfig("/home/ubuntu/test/goWsocket/config.yaml")
 	if err != nil{
 		// log.Fatal("this is main")
 		log.Fatal(err)	
