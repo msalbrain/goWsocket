@@ -178,17 +178,13 @@ func echo(w http.ResponseWriter, r *http.Request) {
 		// log.Fatal("this is main")
 		log.Fatal(err)	
 	}
-	auth := r.URL.Query().Get("access_token")
-	// var b bool
-	// if auth != configure.Server.AccessToken{
-	// 	b = true
-
-	// 	// c.Close()
-	// }
 	c, err := upgrader.Upgrade(w, r, nil)
-	if true{
-		c.WriteJSON(map[string]interface{}{"error": fmt.Sprintf("couldn't validate token, auth: %s, access_t: %s, %v", auth, configure.Server.AccessToken, r.Header)})
+	auth := r.URL.Query().Get("access_token")
+	if auth != configure.Server.AccessToken{
+		c.WriteJSON(map[string]interface{}{"error": fmt.Sprintf("couldn't validate token"), "status": 401})
+		c.Close()
 	}
+
 	if err != nil {
 		log.Print("upgrade:", err)
 		return
