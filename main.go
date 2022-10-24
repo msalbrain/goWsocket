@@ -48,7 +48,7 @@ func confirmInDb(prodId string, limit int, skip int) (bool, map[string]interface
 	is := false
 	var anlysis map[string]interface{}
 	for _, doc := range res {
-		ma := doc.Map()
+		ma := doc
 		if int32(ma["limit"].(int32)) == int32(limit) && int32(ma["skip"].(int32)) == int32(skip) {
 			fmt.Printf("product: %s, limit: %d, skip: %d", prodId, ma["limit"], ma["skip"])
 			fmt.Print("\n")

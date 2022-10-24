@@ -97,7 +97,7 @@ func query(client *mongo.Client, ctx context.Context,
 	return
 }
 
-func CheckDb(prodId string) []bson.D {
+func CheckDb(prodId string) []bson.M {
 
 	client, ctx, cancel, err := connect("mongodb://localhost:27017")
 	if err != nil {
@@ -108,9 +108,7 @@ func CheckDb(prodId string) []bson.D {
 
 	var filter, option interface{}
 
-	filter = bson.D{
-		{Key: "product", Value: prodId},
-	}
+	filter = bson.M{"product": prodId}
 
 	cursor, err := query(client, ctx, "kword",
 		"cache", filter, option)
@@ -119,7 +117,7 @@ func CheckDb(prodId string) []bson.D {
 		panic(err)
 	}
 
-	var results []bson.D
+	var results []bson.M
 
 	if err := cursor.All(ctx, &results); err != nil {
 		panic(err)
